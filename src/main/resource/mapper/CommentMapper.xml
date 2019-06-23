@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tf.ssm.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.tf.ssm.entity.Comment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="author_id" jdbcType="INTEGER" property="authorId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, author_id, content, release_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tf.ssm.entity.Comment">
+    insert into t_comment (id, author_id, content, 
+      release_time)
+    values (#{id,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{releaseTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tf.ssm.entity.Comment">
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="releaseTime != null">
+        release_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tf.ssm.entity.Comment">
+    update t_comment
+    <set>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null">
+        release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tf.ssm.entity.Comment">
+    update t_comment
+    set author_id = #{authorId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      release_time = #{releaseTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    t_comment
+  </select>
+
+</mapper>

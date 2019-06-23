@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tf.ssm.mapper.UserMapper">
+
+    <insert id="addUser" parameterType="user">
+        insert into `t_user`(username,password,email,gender,age,last_ip,last_time) value(#{username},#{password},#{email},#{gender},#{age},#{last_ip},#{last_time})
+    </insert>
+
+    <select id="findUserById" parameterType="int" resultType="user">
+        select * from `t_user` where uid=#{uid}
+    </select>
+
+    <select id="findUserListByName" parameterType="string" resultType="user">
+        select * from `t_user` where username like #{username}
+    </select>
+
+    <select id="selectCount" parameterType="user" resultType="int">
+        select count(*) from `t_user` where username = #{username} and password = #{password}
+    </select>
+
+    <select id="findUserByName" parameterType="String" resultType="user">
+        select * from `t_user` where username = #{username}
+    </select>
+
+    <update id="updateUser" parameterType="userVo">
+        update `t_user`
+        set password = #{user.password},email = #{user.email},gender = #{user.gender},age = #{user.age},last_ip = #{user.last_ip},last_time = #{user.last_time}
+        where uid = #{user.uid}
+    </update>
+</mapper>
